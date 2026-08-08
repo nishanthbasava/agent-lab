@@ -29,17 +29,42 @@ from anthropic import Anthropic
 
 client = Anthropic() # Reads ANTHROPIC_API_KEY
 
+def read_file(path): 
+    with open(path) as file:
+        return file.read()
+    #closes file even if file.read() fails.
+
+messages = []
+
 response = client.messages.create(
     model="claude-opus-5",
     max_tokens=1024,
     tools=[{"name":"read_file", "description":"opens a file", 
-            "input_schema":{"type":"object", "properties": {"path": {"type":"string", "description":"path to the file to read"}}, "required": ["path"]}}],
-    messages=[
-        {"role": "user", "content": "What's in notes.txt"}
-    ],
+            "input_schema":{"type":"object", 
+                            "properties": {"path": {"type":"string", "description":"path to the file to read"}}, 
+                            "required": ["path"]}}],
+    messages.append({"role": "user", "content": "What's in notes.txt"})
 )
 
 print(response.stop_reason)
+
+while stop_reason == tool_use:
+    response = client.messages.create(
+        model="claude-opus-5",
+        max_tokens=1024,
+        tools=[{"name":"read_file", "description":"opens a file", 
+                "input_schema":{"type":"object", 
+                                "properties": {"path": {"type":"string", "description":"path to the file to read"}}, 
+                                "required": ["path"]}}],
+        messages.append({"role": "user", "content": "What's in notes.txt"}),
+    )
+
+    #find block who's type is tool_use, call your function with its input
+    #3. append what the world said back - a user turn whose content answers that request
+    # then call the API again
+    messages.append()
+    #erm im stuck 
+
 
 #some of the blocks on response will be: tool-calls, text, or thinking
 for block in response.content:
