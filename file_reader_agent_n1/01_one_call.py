@@ -36,6 +36,8 @@ def read_file(path):
 
 messages = []
 
+messages.append({"role": "user", "content": "What's in notes.txt"})
+
 response = client.messages.create(
     model="claude-opus-5",
     max_tokens=1024,
@@ -43,12 +45,13 @@ response = client.messages.create(
             "input_schema":{"type":"object", 
                             "properties": {"path": {"type":"string", "description":"path to the file to read"}}, 
                             "required": ["path"]}}],
-    messages.append({"role": "user", "content": "What's in notes.txt"})
+    
+    response = client.messages.create(..., messages=messages)
 )
 
 print(response.stop_reason)
 
-while stop_reason == tool_use:
+while response.stop_reason == "tool_use":
     response = client.messages.create(
         model="claude-opus-5",
         max_tokens=1024,
@@ -56,7 +59,6 @@ while stop_reason == tool_use:
                 "input_schema":{"type":"object", 
                                 "properties": {"path": {"type":"string", "description":"path to the file to read"}}, 
                                 "required": ["path"]}}],
-        messages.append({"role": "user", "content": "What's in notes.txt"}),
     )
 
     #find block who's type is tool_use, call your function with its input
