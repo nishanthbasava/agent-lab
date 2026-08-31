@@ -1,8 +1,23 @@
 import wikipediaapi
-from tool_methods import #write the method names here once I do this
-
+from tool_methods import calc_tool, wikipedia_page_fetcher, wikipedia_page_summarizer, wikipedia_search
 
 tools = [
+
+    {
+        "name": "wikipedia_search",
+        "description": "Search Wikipedia for page titles matching a query. Use this when you don't know the exact page title before calling wikipedia_page_summarizer or wikipedia_page_fetcher.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Search terms, e.g. 'quantum entanglement' or 'french revolution causes'"
+                }
+            },
+            "required": ["query"]
+        }
+    },
+
     { 
         "name":"wikipedia_page_summarizer",
         "description":"Provides a summary of a valid Wikipedia page and throws an error if not provided with a valid page name",
@@ -48,9 +63,5 @@ tools = [
             "required":["expression"]
         }
     }
-
-    #calculator tool
-    #wikipedia tool
-
 
 ]

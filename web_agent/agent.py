@@ -1,5 +1,6 @@
 from anthropic import Anthropic
 from tools import tools
+from vector_store import collection
 
 client = Anthropic()
 steps = 0
