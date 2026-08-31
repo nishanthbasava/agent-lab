@@ -1,5 +1,5 @@
 import wikipediaapi
-from tool_methods import calc_tool, wikipedia_page_fetcher, wikipedia_page_summarizer, wikipedia_search
+from web_agent.agent.tool_methods import calc_tool, wikipedia_page_fetcher, wikipedia_page_summarizer, wikipedia_search
 
 tools = [
 
