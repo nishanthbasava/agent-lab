@@ -24,7 +24,7 @@ tools = [
         "input_schema": {
             "type":"object",
             "properties":{
-                "name": {
+                "page_name": {
                     "type":"string",
                     "description":"The name of the webpage (i.e. 'Python_(programming_language)')"
                 }
@@ -40,7 +40,7 @@ tools = [
         "input_schema": {
             "type":"object",
             "properties": {
-                "expression": {
+                "page_name": {
                     "type":"string",
                     "description": "SymPy-parseable expression or command"
                 }

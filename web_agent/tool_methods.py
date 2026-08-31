@@ -17,9 +17,39 @@ def calc_tool(expression: str) -> str:
         return str(result)
     except (SympifyError, TypeError) as e:
         return f"Could not parse expression: {e}"
+    
+def wikipedia_search(query: str) -> str:
+    """
+    Tool: searches Wikipedia for pages matching a query and
+    returns a list of matching page titles. Use this first when
+    you're not sure of the exact page title, then pass the best
+    match to wikipedia_page_summarizer or wikipedia_page_fetcher.
+    """
+    try:
+        resp = requests.get(
+            "https://en.wikipedia.org/w/api.php",
+            params={
+                "action": "query",
+                "list": "search",
+                "srsearch": query,
+                "format": "json",
+                "srlimit": 5
+            },
+            headers={"User-Agent": "AgentProject (nishanth.basava123@gmail.com)"},
+            timeout=10
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        results = data.get("query", {}).get("search", [])
+        if not results:
+            return f"No Wikipedia results found for '{query}'."
+        titles = [r["title"] for r in results]
+        return "Possible matches: " + ", ".join(titles)
+    except requests.RequestException as e:
+        return f"Error searching Wikipedia for '{query}': {e}"
 
     
-def wikipedia_page_summarizer(expression: str) -> str:
+def wikipedia_page_summarizer(page_name: str) -> str:
     """
     Tool: finds the summary of a specific Wikipedia page
     given a valid page name, otherwise returns an exception.
@@ -33,7 +63,7 @@ def wikipedia_page_summarizer(expression: str) -> str:
         return f"Error fetching summary for '{page_name}'."
 
 
-def wikipedia_page_fetcher(expression: str) -> str:
+def wikipedia_page_fetcher(page_name: str) -> str:
     """
     Tool: extracts the entire page contents for a given Wikipedia
     page if that page exists, else returns an exception.
@@ -42,7 +72,7 @@ def wikipedia_page_fetcher(expression: str) -> str:
         page = wiki.page(page_name)
         if not page.exists():
             return f"No Wikipedia page found for '{page_name}'."
-        return page.text
+        return page.text[:5000] #right now it just fetches the first 5000 characters to not blow up context.
     except Exception as e:
         return f"Error fetching content for '{page_name}'."
 
