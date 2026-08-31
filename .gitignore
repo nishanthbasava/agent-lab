@@ -1,3 +1,4 @@
 .venv
 .env
 __pycache__/
+#chroma_data/, for my purposes it's fine but for production systems, add this internal knowledge to the .gitignore
