@@ -1,6 +1,7 @@
 import requests
 from sympy import sympify, SympifyError
 import wikipediaapi
+from web_agent.retrieval.vector_store import collection 
 
 wiki = wikipediaapi.Wikipedia(user_agent='AgentProject (nishanth.basava123@gmail.com)', language='en')
 
@@ -77,7 +78,7 @@ def wikipedia_page_fetcher(page_name: str) -> str:
         return f"Error fetching content for '{page_name}'."
 
 
-def knowledge_base_retriever(query: str) -> docs:
+def knowledge_base_retriever(query: str) -> str:
     """
     Tool: accesses the internal knowledge base and retrieves the 3 most related
     documents based on cosine similarity with the query.
@@ -86,3 +87,26 @@ def knowledge_base_retriever(query: str) -> docs:
         query_texts=[query],
         n_results=3
     )
+
+    #finish this method
+
+
+def knowledge_base_search_filtered(query: str) -> str:
+    '''
+    Tool: Semantic search over the internal knowledge base. Returns the 3 most
+    relevant document chunks for a given query
+    '''
+    #optional arguments
+    print("Placeholder")
+
+
+def get_full_document(doc_id: str) -> str:
+    #returns full document requested
+    print("Placeholder")
+
+def list_knowledge_base_sources() -> str:
+    #print(knowledge_base_sources)
+    print("Placeholder")
+
+def knowledge_base_search_with_score() -> str:
+    print("Placeholder") 

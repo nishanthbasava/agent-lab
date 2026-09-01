@@ -1,7 +1,10 @@
+from dotenv import load_dotenv
 from anthropic import Anthropic
-from web_agent.agent.tools import tools
+from web_agent.agent.tools import wiki_tools, calc_tools #, kb_tools once implementation is complete
 from web_agent.retrieval.vector_store import collection
 from web_agent.agent.tool_methods import calc_tool, wikipedia_page_fetcher, wikipedia_page_summarizer, wikipedia_search
+
+load_dotenv()
 
 client = Anthropic()
 
@@ -15,12 +18,13 @@ tool_functions = {
 
 MAX_STEPS = 5
 messages = []
+tools = wiki_tools + calc_tools
 
 def run_agent(user_message: str):
 
     steps = 0
 
-    messages.append({"role":"user", "content": input("What is your question?: ")})
+    messages.append({"role":"user", "content": user_message})
 
     while steps < MAX_STEPS:
 
@@ -50,9 +54,12 @@ def run_agent(user_message: str):
             messages.append({"role":"user", "content":tool_results})
 
         else:
+            for msg in messages:
+                print(f"Role: {msg["role"]}, Content: {msg["content"]}")
+
             return "".join(b.text for b in response.content if b.type == "text")
         
-        step += 1
+        steps += 1
 
     return "Agent stopped: reached max steps."
 

@@ -1,7 +1,4 @@
-import wikipediaapi
-from web_agent.agent.tool_methods import calc_tool, wikipedia_page_fetcher, wikipedia_page_summarizer, wikipedia_search
-
-tools = [
+wiki_tools = [
 
     {
         "name": "wikipedia_search",
@@ -24,7 +21,7 @@ tools = [
         "input_schema": {
             "type":"object",
             "properties":{
-                "name": {
+                "page_name": {
                     "type":"string",
                     "description":"The name of the webpage (i.e. 'Python_(programming_language)')"
                 }
@@ -35,7 +32,8 @@ tools = [
 
     {
         "name":"wikipedia_page_fetcher",
-        "desciption":"",
+        "description":'''extracts the entire page contents for a given Wikipedia
+        page if that page exists, else returns an exception.''',
         "input_schema": {
             "type":"object",
             "properties":{
@@ -44,9 +42,13 @@ tools = [
                     "description":"The name of the webpage (i.e. 'Python_(programming_language)')"
                 }
             },
-            "required":["name"]
+            "required":["page_name"]
         }
-    },
+    }
+]
+
+
+calc_tools = [
 
     {
         "name":"sympy_calc",
@@ -55,15 +57,19 @@ tools = [
         "input_schema": {
             "type":"object",
             "properties": {
-                "page_name": {
+                "expression": {
                     "type":"string",
                     "description": "SymPy-parseable expression or command"
                 }
             },
             "required":["expression"]
         }
-    },
+    }
+]
 
+
+kb_tools = [
+    
     {
         "name":"knowledge_base_retriever",
         "description":'''Semantic search over the internal knowledge base. Returns the 3 most

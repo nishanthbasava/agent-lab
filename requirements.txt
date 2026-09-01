@@ -1,3 +1,6 @@
 anthropic
 chromadb
 python-dotenv
+wikipedia-api
+sympy
+requests
