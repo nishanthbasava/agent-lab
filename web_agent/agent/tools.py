@@ -62,6 +62,80 @@ tools = [
             },
             "required":["expression"]
         }
-    }
+    },
 
+    {
+        "name":"knowledge_base_retriever",
+        "description":'''Semantic search over the internal knowledge base. Returns the 3 most
+        relevant document chunks for a given query''',
+        "input_schema": {
+            "type":"object",
+            "properties": {
+                "query": {
+                    "type":"string",
+                    "description": '''Natural language question or search phrase to look up in the internal knowledge base. 
+                        Be specific — include key terms, names, or topics rather than a full sentence.'''
+                }
+            },
+            "required":["query"]
+        }
+    },
+
+    {
+        "name":"knowledge_base_search_filtered",
+        "description":"Semantic search restricted to documents matching filters (e.g. a specific source file or document type)",
+        "input_schema": {
+            "type":"object",
+            "properties": {
+                "query": {
+                    #fill this in in a bit after outline
+                },
+                "source": {
+
+                },
+                "doc_type": {
+
+                },
+                "n_results": {
+
+                }
+            },
+            "required": ["query"]
+        }
+    },
+
+    {
+        "name":"get_full_document",
+        "description":'''Retrieve the full original documebnt given its ID, useful when a search result
+        chunk needs more context.''',
+        "input_schema": {
+            "type":"object",
+            "properties":{
+                "doc_id": {
+                    #fill in property characteristics
+                }
+            }
+        }
+    },
+
+    {
+        "name":"list_knowledge_base_sources",
+        "description":'''lists distinct source documents/categories available in the knowledge base,
+        so the agent knows what is can search.''',
+        "input_schema": {
+            "type":"object",
+            "properties":  {},
+            "required":[]
+        }
+    },
+
+    {
+        "name":"knowledge_base_search_with_score",
+        "description":"yo", #fill this in
+        "input_schema": {
+            "type":"object",
+            "properties":{},
+            "required":[]
+        }
+    }
 ]

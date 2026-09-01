@@ -76,3 +76,13 @@ def wikipedia_page_fetcher(page_name: str) -> str:
     except Exception as e:
         return f"Error fetching content for '{page_name}'."
 
+
+def knowledge_base_retriever(query: str) -> docs:
+    """
+    Tool: accesses the internal knowledge base and retrieves the 3 most related
+    documents based on cosine similarity with the query.
+    """
+    results = collection.query(
+        query_texts=[query],
+        n_results=3
+    )
