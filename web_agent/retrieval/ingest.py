@@ -4,3 +4,4 @@
 # but also an internal vector knowledge base and retrieve documents based on cosine similarities with the 
 # query through RAG. i'm trying to learn how to structure a RAG project with agents, not really focusing on the 
 # functionality. 
+
