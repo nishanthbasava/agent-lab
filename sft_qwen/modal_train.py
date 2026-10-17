@@ -1,7 +1,6 @@
 """Run the same Qwen SFT on Modal with a GPU.
 
-Usage:
-    modal run modal_train.py
+modal run modal_train.py
 """
 
 import modal
