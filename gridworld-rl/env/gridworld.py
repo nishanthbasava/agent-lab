@@ -16,6 +16,7 @@ class GridWorld:
         self.slip = slip
         self.step_cost = step_cost
         self.n_states = self.nrows * self.ncols
+        self.build_P()
 
     def _to_state(self, r, c): #this method converts the row and colummn to state, which is one number representing the agent's position
         return r * self.ncols + c
@@ -39,17 +40,39 @@ class GridWorld:
 
         return self._to_state(nr, nc)
 
-    def P(s, a):
-        #Dynamics/Transition Probabilities table, will contain Transition Probabilities P(s' | s, a) and Expected Rewards (R(s, a, s'))
-        # In Deep RL i typically wouldn't have such a clean and easy table, so for my next project, which will be an agent in CV, def check out different Deep RL options
+    def build_P(self):
+        # Dynamics table: P[s][a] -> [(prob, s_next, reward, done)], probs sum to 1.
+        # DP consumes only this; in deep RL you don't get this table, you sample.
+        self.P = {}
+        for s in range(self.n_states):
+            r, c = self._to_rc(s)
+            cell = self.grid[r, c]
+            self.P[s] = {}
 
+            # terminals are absorbing; walls are unreachable, self-loop keeps them harmless
+            if cell in "GT#":
+                for a in range(4):
+                    self.P[s][a] = [(1.0, s, 0.0, True)]
+                continue
 
-
-        #handle terminal states later
-
-
-
-        pass
+            for a in range(4):
+                outcomes = []
+                for direction, prob in [
+                    (a, 1 - 2 * self.slip),
+                    ((a + 1) % 4, self.slip),
+                    ((a - 1) % 4, self.slip),
+                ]:
+                    s2 = self._move(s, direction)
+                    r2, c2 = self._to_rc(s2)
+                    land = self.grid[r2, c2]
+                    if land == "G":
+                        reward, done = 1.0, True
+                    elif land == "T":
+                        reward, done = -1.0, True
+                    else:
+                        reward, done = self.step_cost, False
+                    outcomes.append((prob, s2, reward, done))
+                self.P[s][a] = outcomes
 
     #next i gotta write DP
 
