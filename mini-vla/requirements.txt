@@ -1,0 +1,16 @@
+# Pinned where LIBERO's sim stack is fragile, loose elsewhere.
+numpy==1.23.5          # robosuite 1.4 uses np.float-era APIs, removed in numpy>=1.24
+robosuite==1.4.0       # LIBERO's pinned sim framework
+mujoco==2.3.7          # robosuite 1.4 breaks on mujoco 3.x; on macOS, patch cgl.py path (see README)
+bddl==1.0.1            # task-definition language LIBERO scenes are written in
+easydict
+gym==0.25.2
+torch
+h5py
+imageio
+matplotlib
+termcolor
+tqdm
+pyyaml
+huggingface_hub
+future

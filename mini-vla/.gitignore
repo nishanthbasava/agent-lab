@@ -1,0 +1,10 @@
+.venv/
+data/
+third_party/
+__pycache__/
+*.pyc
+*.gif
+*.mp4
+wandb/
+checkpoints/
+.DS_Store
