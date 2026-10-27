@@ -50,7 +50,7 @@ class GridWorld:
             self.P[s] = {}
 
             # terminals are absorbing; walls are unreachable, self-loop keeps them harmless
-            if cell in "GT#":
+            if cell in "GT#": # G = Goal, T = Trap, # = Wall
                 for a in range(4):
                     self.P[s][a] = [(1.0, s, 0.0, True)]
                 continue
