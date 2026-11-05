@@ -1,4 +1,6 @@
 import h5py, json 
+import torch
+import numpy as np
 
 class LiberoDataset(torch.utils.data.Dataset):
     def __init__(self, path):

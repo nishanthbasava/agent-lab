@@ -1,6 +1,6 @@
 import torch
 import requests
-from PIL import image
+from PIL import Image
 import h5py, json #HDF5 is LIBERO data format, it's Hierarchical Data Format, version 5
 # container for storing large numerical arrays together with labels describing them 
 # look into robomimic later
@@ -21,7 +21,7 @@ print(imgs[0])
 '''
 from transformers import AutoModel, AutoProcessor, BitsAndBytesConfig #using this for quantization of ONLY WEIGHTS
 
-bnb_config = BitsAndByesConfig(load_in_4bit=True)
+bnb_config = BitsAndBytesConfig(load_in_4bit=True)
 
 #just using a pre-trained encoder
 model = AutoModel.from_pretrained("google/siglip-base-patch16-224", quantization_config=bnb_config, device_map="auto", attn_implementation="sdpa")
