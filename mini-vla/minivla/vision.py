@@ -17,9 +17,9 @@ class VisionEncoder(torch.nn.Module):
         super().__init__()
         self.device = device or pick_device()
 
-        # this processor just resized, rescales, and normalizes iamges
+        # this processor just resized, rescales, and normalizes images
         # in the same format that SigLIP saw them during pretraining
-        self.processor = AutoImageProcess.from_pretrained(model_id)
+        self.processor = AutoImageProcessor.from_pretrained(model_id)
 
         #this half is just the vision half of SigLIP
         self.model = SiglipVisionModel.from_pretrained(model_id).to(self.device)
@@ -40,6 +40,3 @@ class VisionEncoder(torch.nn.Module):
         pixel_values = inputs["pixel_values"].to(self.device)
         out = self.model(pixel_values=pixel_values)
         return out.last_hidden_state, out.pooler_output
-
-
-
