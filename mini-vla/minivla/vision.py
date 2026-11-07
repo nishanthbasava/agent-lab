@@ -20,9 +20,16 @@ class VisionEncoder(torch.nn.Module):
         # this processor just resized, rescales, and normalizes images
         # in the same format that SigLIP saw them during pretraining
         self.processor = AutoImageProcessor.from_pretrained(model_id)
+        # at this step the input image is projected into the training space
 
         #this half is just the vision half of SigLIP
         self.model = SiglipVisionModel.from_pretrained(model_id).to(self.device)
+        #General Architecture implemented:
+        # 1. Patch embeddings: A convolution with 16x16 kernel and stride 16. Each 16x16x3 patch (768 raw pixel values) is linearly mapped to a 768-dim vector. Output: (B, 196, 768)
+        # 2. Position embeddings. A learned vector is added to each of the 196 positions. Attention itself has no sense of order, so this is where the model knows where each patch sits in the image.
+        # 3. 12 transformer encoder layers. Each one does self-attention and then an MLP applied to each patch separately, with residual connections and LayerNorm. The residual stream's shape stays (B, 196, 768) throughout.
+        # 4. Final Lyaer Norm. The result is last_hidden_state
+        # 5. Pooling head: SigLip has no [CLS] 
 
         self.model.eval()
         for p in self.model.parameters():

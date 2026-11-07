@@ -35,7 +35,7 @@ class LiberoDataset(torch.utils.data.Dataset):
         # Only metadata is read here; images stay on disk until __getitem__.
         self.instructions = []
         self.index = []
-        for fi, path in enumerate(self.files):
+        for f, path in enumerate(self.files):
             with h5py.File(path, "r") as f:
                 info = json.loads(f["data"].attrs["problem_info"])
                 self.instructions.append(info["language_instruction"])
