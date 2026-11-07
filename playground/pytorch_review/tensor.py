@@ -41,3 +41,8 @@
 #
 # Add type hints everywhere and run mypy. Confirm that Module() raises a
 # TypeError.
+
+from abc import ABC, abstractmethod
+
+class Tensor:
+    pass
