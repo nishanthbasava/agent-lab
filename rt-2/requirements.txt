@@ -1,0 +1,6 @@
+# Additions on top of ../mini-vla/.venv (which already has torch, transformers,
+# h5py, matplotlib, huggingface_hub, and the pinned LIBERO sim stack).
+peft           # LoRA for co-fine-tuning (module 03)
+accelerate     # device placement for HF model loading
+datasets       # small VQA/captioning mixture for co-fine-tuning (module 03)
+pillow
