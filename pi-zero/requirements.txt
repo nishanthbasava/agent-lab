@@ -1,0 +1,6 @@
+# Additions on top of ../mini-vla/.venv (torch, transformers, h5py, matplotlib,
+# protobuf, and the pinned LIBERO sim stack are already there).
+# Stage 00 needs nothing. From stage 01 on:
+peft           # LoRA on the PaliGemma backbone
+accelerate     # device placement for HF model loading
+pillow
